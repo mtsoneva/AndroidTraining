@@ -1,13 +1,11 @@
 package com.example.androidtraining.networking
 
 class TokenProvider(
-    private var jwtToken: String? = null,
-    private var isLoggedIn: Boolean = false
+    private var jwtToken: String? = null
 ) {
 
     fun setJwtToken(token: String) {
         jwtToken = token
-        isLoggedIn = true
     }
 
     fun getJwtToken(): String? {
@@ -15,11 +13,13 @@ class TokenProvider(
     }
 
     fun isLoggedIn(): Boolean {
-        return isLoggedIn
+        jwtToken?.let {
+            return true
+        }
+        return false
     }
 
     fun clearToken() {
         jwtToken = null
-        isLoggedIn = false
     }
 }

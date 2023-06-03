@@ -22,11 +22,6 @@ class APIClient(private val jwtInterceptor: TokenInterceptor) {
             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.MINUTES)
             .readTimeout(DEFAULT_TIMEOUT, TimeUnit.MINUTES)
             .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.MINUTES)
-            .addInterceptor { chain ->
-                val originalRequest = chain.request()
-                val requestBuilder = originalRequest.newBuilder()
-                chain.proceed(requestBuilder.build())
-            }
             .addInterceptor(jwtInterceptor)
             .build()
 

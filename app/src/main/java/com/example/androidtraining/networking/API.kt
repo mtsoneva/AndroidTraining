@@ -10,7 +10,6 @@ import retrofit2.http.POST
 
 interface API {
     @POST(value = "/api/auth/local")
-    @Headers("No-Authentication: true")
     suspend fun login(@Body userInfo: UserInfo): LoginResponse
 
     @GET(value = "/api/products/2?populate=*")

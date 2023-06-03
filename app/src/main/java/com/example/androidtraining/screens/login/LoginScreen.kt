@@ -35,13 +35,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.androidtraining.MainViewModel
 import com.example.androidtraining.R
-import com.example.androidtraining.models.LoginResponse
 import com.example.androidtraining.models.UserInfo
-import com.example.androidtraining.networking.TokenProvider
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(tokenProvider: TokenProvider, navigateToProductScreen: () -> Unit = {}) {
+fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
     val viewModel: MainViewModel = hiltViewModel()
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -54,8 +52,7 @@ fun LoginScreen(tokenProvider: TokenProvider, navigateToProductScreen: () -> Uni
 
     LaunchedEffect(response) {
         response?.let { result ->
-            result.onSuccess { response: LoginResponse ->
-                tokenProvider.setJwtToken(response.jwt)
+            result.onSuccess {
                 navigateToProductScreen()
             }
             result.onFailure {

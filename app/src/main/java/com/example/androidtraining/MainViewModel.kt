@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidtraining.models.LoginResponse
 import com.example.androidtraining.models.Product
 import com.example.androidtraining.models.UserInfo
+import com.example.androidtraining.networking.TokenProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val firstRepository: FirstRepository) :
     ViewModel() {
+    @Inject
+    lateinit var tokenProvider: TokenProvider
     private val _response = MutableStateFlow<Result<LoginResponse>?>(null)
     val response: StateFlow<Result<LoginResponse>?> = _response
 
@@ -25,6 +28,7 @@ class MainViewModel @Inject constructor(private val firstRepository: FirstReposi
             try {
                 _isLoading.value = true
                 val loginResponse = firstRepository.login(userInfo)
+                tokenProvider.setJwtToken(loginResponse.jwt)
                 _response.value = Result.success(loginResponse)
             } catch (e: Exception) {
                 _response.value = Result.failure(e)
