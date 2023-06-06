@@ -1,5 +1,6 @@
 package com.example.androidtraining.screens.product
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -29,30 +28,26 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.androidtraining.MainViewModel
-import com.example.androidtraining.models.Product
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ProductScreen() {
     val viewModel: MainViewModel = hiltViewModel()
     val response by viewModel.productResponse.collectAsState()
     val context = LocalContext.current
-    val productData = remember { mutableStateOf<Product?>(null) }
     LaunchedEffect(true) {
         viewModel.getProduct()
     }
 
     LaunchedEffect(response) {
         response?.let { result ->
-            result.onSuccess { product: Product ->
-                productData.value = product
-            }
             result.onFailure {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    productData.value?.let { item ->
+    viewModel.productResponse.value?.getOrNull()?.let { item ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
