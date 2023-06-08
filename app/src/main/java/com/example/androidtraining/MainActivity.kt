@@ -16,7 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.androidtraining.screens.login.LoginScreen
 import com.example.androidtraining.screens.product.ProductScreen
 import com.example.androidtraining.ui.theme.AndroidTrainingTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
