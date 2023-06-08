@@ -1,5 +1,7 @@
 package com.example.androidtraining
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidtraining.models.LoginResponse
@@ -20,8 +22,11 @@ class MainViewModel @Inject constructor(private val firstRepository: FirstReposi
     private val _response = MutableStateFlow<Result<LoginResponse>?>(null)
     val response: StateFlow<Result<LoginResponse>?> = _response
 
+    private val _successfulLogin = MutableStateFlow<Boolean?>(null)
+    val successfulLogin: StateFlow<Boolean?> = _successfulLogin
+
     private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    var isLoading: StateFlow<Boolean> = _isLoading
 
     fun login(userInfo: UserInfo) {
         viewModelScope.launch {
@@ -30,8 +35,10 @@ class MainViewModel @Inject constructor(private val firstRepository: FirstReposi
                 val loginResponse = firstRepository.login(userInfo)
                 tokenProvider.setJwtToken(loginResponse.jwt)
                 _response.value = Result.success(loginResponse)
+                _successfulLogin.value = true
             } catch (e: Exception) {
                 _response.value = Result.failure(e)
+                _successfulLogin.value = false
             } finally {
                 _isLoading.value = false
             }
@@ -44,14 +51,19 @@ class MainViewModel @Inject constructor(private val firstRepository: FirstReposi
     private val _isProductLoading = MutableStateFlow(false)
     val isProductLoading: StateFlow<Boolean> = _isLoading
 
+    private val _successfulProductLoading = MutableStateFlow<Boolean?>(null)
+    val successfulProductLoading: StateFlow<Boolean?> = _successfulProductLoading
+
     fun getProduct() {
         viewModelScope.launch {
             try {
                 _isProductLoading.value = true
                 val getProductDetailsResponse = firstRepository.getProduct()
                 _productResponse.value = Result.success(getProductDetailsResponse)
+                _successfulProductLoading.value = true
             } catch (e: Exception) {
                 _productResponse.value = Result.failure(e)
+                _successfulProductLoading.value = false
             } finally {
                 _isProductLoading.value = false
             }

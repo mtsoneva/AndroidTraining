@@ -33,17 +33,16 @@ import com.example.androidtraining.MainViewModel
 @Composable
 fun ProductScreen() {
     val viewModel: MainViewModel = hiltViewModel()
-    val response by viewModel.productResponse.collectAsState()
     val context = LocalContext.current
+    val successfulProductLoading by viewModel.successfulProductLoading.collectAsState()
+
     LaunchedEffect(true) {
         viewModel.getProduct()
     }
 
-    LaunchedEffect(response) {
-        response?.let { result ->
-            result.onFailure {
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-            }
+    LaunchedEffect(successfulProductLoading) {
+        successfulProductLoading?.let {
+            if (!it) Toast.makeText(context, "Error on product loading", Toast.LENGTH_SHORT).show()
         }
     }
 

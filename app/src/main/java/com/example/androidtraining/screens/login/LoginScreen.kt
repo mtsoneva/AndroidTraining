@@ -46,20 +46,15 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
     val passwordVisible = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val userInfo = UserInfo(email.value, password.value)
-    val mainViewModel: MainViewModel = hiltViewModel()
-    val response by mainViewModel.response.collectAsState()
-    val isLoading by mainViewModel.isLoading.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val successfulLogin by viewModel.successfulLogin.collectAsState()
 
-    LaunchedEffect(response) {
-        response?.let { result ->
-            result.onSuccess {
-                navigateToProductScreen()
-            }
-            result.onFailure {
-                Toast.makeText(context, "Wrong credentials", Toast.LENGTH_SHORT).show()
-            }
+    LaunchedEffect(successfulLogin) {
+        successfulLogin?.let {
+            if (it) navigateToProductScreen() else Toast.makeText(context, "Wrong credentials", Toast.LENGTH_SHORT).show()
         }
     }
+
     val isValidEmail: () -> Boolean = {
         if (email.value.isNotEmpty()) {
             android.util.Patterns.EMAIL_ADDRESS.matcher(email.value).matches();
