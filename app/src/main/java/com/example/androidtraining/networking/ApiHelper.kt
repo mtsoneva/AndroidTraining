@@ -1,4 +1,4 @@
-package com.example.androidtraining
+package com.example.androidtraining.networking
 
 import com.example.androidtraining.models.LoginResponse
 import com.example.androidtraining.models.Product
