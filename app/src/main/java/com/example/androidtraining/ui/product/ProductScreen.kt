@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -63,7 +64,8 @@ fun ProductScreen() {
     val viewModel: ProductViewModel = hiltViewModel()
     val context = LocalContext.current
     val successfulProductLoading by viewModel.successfulProductLoading.collectAsState()
-
+    val paddingLarge = dimensionResource(id = R.dimen.padding_large)
+    val paddingMedium = dimensionResource(id = R.dimen.padding_medium)
     LaunchedEffect(true) {
         viewModel.getProduct()
     }
@@ -125,7 +127,7 @@ fun ProductScreen() {
                             painterResource(id = R.drawable.product_background),
                             contentScale = ContentScale.FillWidth
                         )
-                        .padding(horizontal = 30.dp)
+                        .padding(horizontal = paddingLarge)
                         .padding(top = paddingValues.calculateTopPadding())
                 ) {
                     Box(
@@ -146,7 +148,7 @@ fun ProductScreen() {
 
                         Row(
                             modifier = Modifier
-                                .padding(15.dp)
+                                .padding(paddingMedium)
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
                         ) {
@@ -159,7 +161,7 @@ fun ProductScreen() {
                             ) {
                                 Row(
                                     modifier = Modifier
-                                        .padding(horizontal = 15.dp)
+                                        .padding(horizontal = paddingMedium)
                                 ) {
                                     if (item.stock > 0) {
                                         Icon(
@@ -170,7 +172,7 @@ fun ProductScreen() {
                                         Text(
                                             text = stringResource(id = R.string.in_stock),
                                             modifier = Modifier
-                                                .padding(horizontal = 5.dp)
+                                                .padding(horizontal = dimensionResource(id = R.dimen.padding_extra_small))
                                         )
                                     } else {
                                         Icon(
@@ -181,7 +183,7 @@ fun ProductScreen() {
                                         Text(
                                             text = stringResource(id = R.string.out_of_stock),
                                             modifier = Modifier
-                                                .padding(horizontal = 5.dp),
+                                                .padding(horizontal = dimensionResource(id = R.dimen.padding_extra_small)),
                                             color = Color.Red
                                         )
                                     }
@@ -193,7 +195,7 @@ fun ProductScreen() {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 15.dp),
+                            .padding(top = paddingMedium),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = item.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
@@ -207,7 +209,7 @@ fun ProductScreen() {
 
                     Text(
                         text = item.description,
-                        Modifier.padding(vertical = 30.dp),
+                        Modifier.padding(vertical = paddingLarge),
                         fontSize = 16.sp
                     )
 
@@ -221,7 +223,7 @@ fun ProductScreen() {
                     Button(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 5.dp, horizontal = 10.dp),
+                            .padding(vertical = dimensionResource(id = R.dimen.padding_extra_small), horizontal = dimensionResource(id = R.dimen.padding_small)),
                         colors = ButtonDefaults.buttonColors(Purple),
                         enabled = item.stock > 0,
                         onClick = { /*TODO*/ }) {

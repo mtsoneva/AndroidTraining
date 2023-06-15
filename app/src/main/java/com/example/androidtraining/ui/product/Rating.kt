@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.androidtraining.ui.theme.GreyStar
 import com.example.androidtraining.ui.theme.PurpleStar
+import com.example.androidtraining.utils.Constants
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -33,7 +34,7 @@ fun Rating(rating: Int) {
                     tint = PurpleStar
                 )
             }
-            repeat(5 - rating) {
+            repeat(Constants.MAX_RATING - rating) {
                 Icon(
                     Icons.Default.Star,
                     contentDescription = null,

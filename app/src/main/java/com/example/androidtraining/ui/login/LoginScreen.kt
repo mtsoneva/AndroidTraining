@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -79,12 +80,14 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
                 painterResource(id = R.drawable.login_background),
                 contentScale = ContentScale.FillWidth
             )
-            .padding(horizontal = 20.dp, vertical = 20.dp)
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.padding_large),
+                vertical = dimensionResource(id = R.dimen.padding_large)
+            )
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 20.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             Image(
@@ -94,7 +97,12 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
                     .size(200.dp)
             )
         }
-        Text(text = stringResource(id = R.string.log_in), fontWeight = FontWeight.Bold, fontSize = 30.sp, color = Purple)
+        Text(
+            text = stringResource(id = R.string.log_in),
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            color = Purple
+        )
         OutlinedTextField(
             value = email.value,
             onValueChange = { newValue ->
@@ -105,7 +113,7 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
             placeholder = { Text(stringResource(id = R.string.input_email)) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 35.dp)
+                .padding(vertical = dimensionResource(id = R.dimen.padding_large))
         )
         OutlinedTextField(value = password.value,
             onValueChange = { password.value = it },
@@ -121,7 +129,10 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
                     painterResource(R.drawable.visibility)
                 else painterResource(R.drawable.visibility_off)
 
-                val description = if (passwordVisible.value) stringResource(id = R.string.hide_password) else stringResource(id = R.string.show_password)
+                val description =
+                    if (passwordVisible.value) stringResource(id = R.string.hide_password) else stringResource(
+                        id = R.string.show_password
+                    )
 
                 IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                     Image(painter = image, description)
@@ -131,7 +142,10 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 35.dp, horizontal = 10.dp),
+                .padding(
+                    vertical = dimensionResource(id = R.dimen.padding_large),
+                    horizontal = dimensionResource(id = R.dimen.padding_small)
+                ),
             onClick = {
                 keyboardController?.hide()
                 viewModel.login(userInfo)
