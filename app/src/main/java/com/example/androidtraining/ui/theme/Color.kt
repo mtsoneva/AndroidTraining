@@ -14,8 +14,6 @@ val Purple = Color(0xFF47337A)
 val White = Color(0xFFFFFF)
 val Green = Color(0xFF42AF46)
 
-val GreyText = Color(0xFF4A4A4A)
-
 // rating icons colors
 val PurpleStar = Color(0xFF67548B)
 val GreyStar = Color(0xFFD8D9DB)

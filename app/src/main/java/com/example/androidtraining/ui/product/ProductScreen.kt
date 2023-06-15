@@ -27,6 +27,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,9 +44,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +51,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.androidtraining.R
 import com.example.androidtraining.ui.theme.Green
-import com.example.androidtraining.ui.theme.GreyText
 import com.example.androidtraining.ui.theme.Purple
 import com.example.androidtraining.ui.theme.White
 
@@ -198,37 +195,41 @@ fun ProductScreen() {
                             .padding(top = paddingMedium),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = item.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        Text(text = item.title, style = MaterialTheme.typography.titleMedium)
                         Rating(rating = item.rating)
                     }
                     Text(
                         text = stringResource(id = R.string.category, item.category),
-                        fontSize = 12.sp,
-                        color = GreyText
+                        style = MaterialTheme.typography.labelMedium
                     )
 
                     Text(
                         text = item.description,
                         Modifier.padding(vertical = paddingLarge),
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyLarge
                     )
 
                     Text(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = "$${String.format("%.2f", item.price.toDouble())}",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
+                        style = MaterialTheme.typography.headlineLarge.copy(fontSize = 24.sp)
                     )
                     Button(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = dimensionResource(id = R.dimen.padding_extra_small), horizontal = dimensionResource(id = R.dimen.padding_small)),
+                            .padding(
+                                vertical = dimensionResource(id = R.dimen.padding_extra_small),
+                                horizontal = dimensionResource(id = R.dimen.padding_small)
+                            ),
                         colors = ButtonDefaults.buttonColors(Purple),
                         enabled = item.stock > 0,
                         onClick = { /*TODO*/ }) {
                         Icon(Icons.Default.Add, contentDescription = null)
-                        Text(text = stringResource(id = R.string.add_to_cart), fontSize = 16.sp)
+                        Text(
+                            text = stringResource(id = R.string.add_to_cart),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
             }
