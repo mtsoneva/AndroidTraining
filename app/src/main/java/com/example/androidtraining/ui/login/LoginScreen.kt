@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -56,7 +57,7 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
         successfulLogin?.let {
             if (it) navigateToProductScreen() else Toast.makeText(
                 context,
-                "Wrong credentials",
+                R.string.wrong_credentials,
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -88,29 +89,29 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
-                contentDescription = "logo",
+                contentDescription = stringResource(id = R.string.logo),
                 modifier = Modifier
                     .size(200.dp)
             )
         }
-        Text(text = "Log in", fontWeight = FontWeight.Bold, fontSize = 30.sp, color = Purple)
+        Text(text = stringResource(id = R.string.log_in), fontWeight = FontWeight.Bold, fontSize = 30.sp, color = Purple)
         OutlinedTextField(
             value = email.value,
             onValueChange = { newValue ->
                 email.value = newValue
             },
             isError = !isValidEmail(),
-            label = { Text("Email") },
-            placeholder = { Text("Input email") },
+            label = { Text(stringResource(id = R.string.email)) },
+            placeholder = { Text(stringResource(id = R.string.input_email)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 35.dp)
         )
         OutlinedTextField(value = password.value,
             onValueChange = { password.value = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(id = R.string.password)) },
             singleLine = true,
-            placeholder = { Text("Password") },
+            placeholder = { Text(stringResource(id = R.string.password)) },
             modifier = Modifier
                 .fillMaxWidth(),
             visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
@@ -120,7 +121,7 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
                     painterResource(R.drawable.visibility)
                 else painterResource(R.drawable.visibility_off)
 
-                val description = if (passwordVisible.value) "Hide password" else "Show password"
+                val description = if (passwordVisible.value) stringResource(id = R.string.hide_password) else stringResource(id = R.string.show_password)
 
                 IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                     Image(painter = image, description)
@@ -138,7 +139,7 @@ fun LoginScreen(navigateToProductScreen: () -> Unit = {}) {
             colors = ButtonDefaults.buttonColors(Purple),
             enabled = !isLoading
         ) {
-            Text(text = "Log in")
+            Text(text = stringResource(id = R.string.log_in))
         }
     }
 }

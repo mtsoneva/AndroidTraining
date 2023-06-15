@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -69,7 +70,7 @@ fun ProductScreen() {
 
     LaunchedEffect(successfulProductLoading) {
         successfulProductLoading?.let {
-            if (!it) Toast.makeText(context, "Error on product loading", Toast.LENGTH_SHORT).show()
+            if (!it) Toast.makeText(context, R.string.log_in, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,7 +79,7 @@ fun ProductScreen() {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Item",
+                        stringResource(id = R.string.item),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -87,7 +88,7 @@ fun ProductScreen() {
                     IconButton(onClick = { /* doSomething() */ }) {
                         Icon(
                             imageVector = Icons.Outlined.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = stringResource(id = R.string.arrow_back)
                         )
                     }
                 },
@@ -102,16 +103,13 @@ fun ProductScreen() {
                                     val badgeNumber = "8"
                                     Text(
                                         badgeNumber,
-                                        color = White,
-                                        modifier = Modifier.semantics {
-                                            contentDescription = "$badgeNumber new notifications"
-                                        }
+                                        color = White
                                     )
                                 }
                             }) {
                             Icon(
                                 Icons.Outlined.ShoppingCart,
-                                contentDescription = "shopping cart"
+                                contentDescription = stringResource(id = R.string.shopping_cart)
                             )
                         }
                     }
@@ -170,7 +168,7 @@ fun ProductScreen() {
                                             tint = Green
                                         )
                                         Text(
-                                            text = "In stock",
+                                            text = stringResource(id = R.string.in_stock),
                                             modifier = Modifier
                                                 .padding(horizontal = 5.dp)
                                         )
@@ -181,7 +179,7 @@ fun ProductScreen() {
                                             tint = Color.Red
                                         )
                                         Text(
-                                            text = "Out of stock",
+                                            text = stringResource(id = R.string.out_of_stock),
                                             modifier = Modifier
                                                 .padding(horizontal = 5.dp),
                                             color = Color.Red
@@ -201,7 +199,11 @@ fun ProductScreen() {
                         Text(text = item.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                         Rating(rating = item.rating)
                     }
-                    Text(text = "Category: ${item.category}", fontSize = 12.sp, color = GreyText)
+                    Text(
+                        text = stringResource(id = R.string.category, item.category),
+                        fontSize = 12.sp,
+                        color = GreyText
+                    )
 
                     Text(
                         text = item.description,
@@ -224,7 +226,7 @@ fun ProductScreen() {
                         enabled = item.stock > 0,
                         onClick = { /*TODO*/ }) {
                         Icon(Icons.Default.Add, contentDescription = null)
-                        Text(text = "Add to cart", fontSize = 16.sp)
+                        Text(text = stringResource(id = R.string.add_to_cart), fontSize = 16.sp)
                     }
                 }
             }
