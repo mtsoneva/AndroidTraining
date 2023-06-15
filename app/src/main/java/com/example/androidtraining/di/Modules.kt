@@ -1,6 +1,6 @@
 package com.example.androidtraining.di
 
-import com.example.androidtraining.FirstRepository
+import com.example.androidtraining.repository.FirstRepository
 import com.example.androidtraining.networking.API
 import com.example.androidtraining.networking.APIClient
 import com.example.androidtraining.networking.TokenInterceptor

@@ -1,4 +1,4 @@
-package com.example.androidtraining
+package com.example.androidtraining.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.androidtraining.screens.login.LoginScreen
-import com.example.androidtraining.screens.product.ProductScreen
+import com.example.androidtraining.ui.login.LoginScreen
+import com.example.androidtraining.ui.product.ProductScreen
 import com.example.androidtraining.ui.theme.AndroidTrainingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
