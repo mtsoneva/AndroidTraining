@@ -69,7 +69,7 @@ fun ProductScreen() {
 
     LaunchedEffect(successfulProductLoading) {
         successfulProductLoading?.let {
-            if (!it) Toast.makeText(context, R.string.log_in, Toast.LENGTH_SHORT).show()
+            if (!it) Toast.makeText(context, R.string.err_product_loading, Toast.LENGTH_SHORT).show()
         }
     }
 
